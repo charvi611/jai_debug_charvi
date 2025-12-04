@@ -1,31 +1,35 @@
-# Development Log – Jai Debug Feature (Charvi)
+# Development Log – Charvi
 
-## 2025-12-02 – Fresh setup
-- Created new folder `jai_debug_charvi`.
-- Added files: registry.py, inspector.py, codegen.py, run_tests.py, run_benchmarks.py, dev_log.md.
-- Goal: mimic Jai-style debugging features:
-  - Type registry for runtime type info.
-  - DFS object inspector to inspect Python objects.
-  - Template-based code generator with memoization.
+## 2025-11-28
+- Set up the folder for my part of the project.
+- Added the main files I would be working on: registry.py, inspector.py, codegen.py, run_tests.py, run_benchmarks.py, and this dev_log.
+- My goal was to create small Jai-style debugging features in Python so we could compare ideas from the talk.
 
-## 2025-12-02 – Core implementation
-- Implemented FastRegistry (dict-based, average O(1) lookup).
-- Implemented SlowRegistry (list-based, O(n) lookup for comparison).
-- Implemented DFS-based inspector with circular reference detection and max depth.
-- Implemented template expansion (O(n)) and memoized generate_code (first call O(n), later calls O(1) cache lookup).
-## 2025-12-02 – Benchmark Results
+## 2025-11-29
+- Started working on the registry system.
+- Implemented FastRegistry using a dictionary (expected O(1) lookup).
+- Also added SlowRegistry using a list so I could compare the two and show the difference in performance.
+- Wrote a small test in run_tests.py to make sure registration and lookups were working properly.
 
-### Registry Lookup Times
-Format: n, FastRegistry time (s), SlowRegistry time (s)
+## 2025-11-30
+- Continued with the inspector tool.
+- Added DFS-based object inspection that collects information about objects and their attributes.
+- Added simple cycle detection and a depth limit so the inspector wouldn’t get stuck.
+- Cleaned up some edge cases and printed a few inspection outputs for testing.
 
-```
+## 2025-12-01
+- Worked on codegen.py.
+- Added template expansion and a basic caching mechanism so repeated calls are faster.
+- Connected everything so the registry, inspector and codegen parts work independently.
+
+## 2025-12-02
+- Ran benchmark tests for FastRegistry vs SlowRegistry.
+- Used run_benchmarks.py to collect simple timing results.
+
+### Registry Lookup Times  
+Format: n, FastRegistry (s), SlowRegistry (s)
+
 100, 0.00000021, 0.00000112
 1000, 0.00000038, 0.00001017
 5000, 0.00000079, 0.00004271
-```
 
-```
- Memoized vs Non-memoized Code Generation
-Non-memoized: 0.29785 s
-Memoized: 0.00509 s
-```
